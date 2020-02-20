@@ -12,18 +12,29 @@ import ShoppingCart from './components/ShoppingCart';
 import ProductContext from './contexts/ProductContext'
 import CartContext from './contexts/CartContext'
 
+// Hooks/Stretch
+import { useLocalStorage } from "./hooks/useLocalStorage";
+
 
 function App() {
 	const [products] = useState(data);
-	const [cart, setCart] = useState([]);
+	// const [cart, setCart] = useState([]);
+	//stretch
+	const [cart,setCart] = useLocalStorage("");
+
 
 	const addItem = item => {
 		// add the given item to the cart
 		setCart([...cart, item]);
 	};
 
+	// 1st Attempting  stretch 
+	const removeItem = id =>{
+		setCart(cart.filter(item=> item.id !== id))
+	}
+
 	return (
-		<ProductContext.Provider value={{products, addItem}}>
+		<ProductContext.Provider value={{products, addItem, removeItem}}>
 			<CartContext.Provider value={{cart}}>
 			<div className="App">
 			<Navigation cart={cart} />
